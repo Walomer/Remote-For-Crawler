@@ -11,4 +11,11 @@
   <p class="word">Votre recherche : {{ research }}</p>
   {{ query|safe }}
 </div>
+    {% for post in posts %}
+        <a href="#">
+            <h2>{{ post['title'] }}</h2>
+        </a>
+        <span class="badge badge-primary">{{ post['created'] }}</span>
+        <hr>
+    {% endfor %}
 {% endblock %}
