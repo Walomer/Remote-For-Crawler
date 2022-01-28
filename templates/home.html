@@ -22,9 +22,20 @@
 </div>
     {% for post in posts %}
         <a href="#">
-            <h2>{{ post['title'] }}</h2>
+            <h2>{{ post['user_name'] }}</h2>
         </a>
-        <span class="badge badge-primary">{{ post['created'] }}</span>
+        <p>{{ post['content'] }}</p>
+        <ul>
+            <li>{{ post['created_date'] }}</li>
+            <li>{{ post['tweet_id'] }}</li>
+            <li>{{ post['reply_count'] }}</li>
+            <li>{{ post['retweet_count'] }}</li>
+            <li>{{ post['lang'] }}</li>
+            <li>{{ post['user_name'] }}</li>
+            <li>{{ post['id'] }}</li>
+        </ul>
+        <span class="badge badge-primary">{{ post['created_date'] }}</span>
+
         <hr>
     {% endfor %}
 {% endblock %}
