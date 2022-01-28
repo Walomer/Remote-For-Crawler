@@ -57,7 +57,7 @@ def research():
                            "likes": tweet.likeCount, "langue": tweet.lang, "date": tweet.date})
 
     # * Ici on ajoute dans la BD
-    #! Formatter la date en yyyy-mm-jj
+    #! Formatter la date en yyyy-mm-jj => split " " ; [0]
 
     # print(tweets)
     return render_template('home.html', ans=tweets)
