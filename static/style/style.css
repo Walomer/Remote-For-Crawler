@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Mochiy+Pop+P+One&display=swap');
+
+.body{
+    background-color: inherit;
+    background-image: inherit;
+    background-color: #222327;
+    color: #ececeb;
+
+}
+
+.picto, .pictotel{
+    display: block;
+    height: 30px;
+    width: 30px;
+    margin: auto;
+}
+
+.acceuil{
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-size: 48px;
+    color: inherit;
+    color: #ececeb;
+}
+
+.cat{
+    color:#ececeb
+}
+
+.btn-group, .submitForm {
+    width: 100%;
+}
+
+.small {
+    font-style: italic;
+    font-size: 0.800em;
+}
+
+.telecommande > .picto{
+    display: inline-block;
+}
+
+ion-icon{
+    pointer-events: none;
+}
+
