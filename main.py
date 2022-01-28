@@ -22,7 +22,7 @@ def research():
 
     #connection à la base de donnée
     sqliteConnection  = sqlite3.connect('database/database.db')
-    cursor = sqliteConnection .cursor()
+    cursor = sqliteConnection.cursor()
 
     typeSearch = list(request.form.to_dict(flat=False).keys())[1]
     search = request.form.get('search')
@@ -37,7 +37,7 @@ def research():
         ####  Ajout dans la base de donnée de chaques réponses ###
             #Préparation de la requête
             sqlite_insert_query = "INSERT INTO posts (tweet_id, user_name, content, reply_count, retweet_count, likes, created) VALUES (" + str(tweet.id) + "," + str(tweet.user.username) + "," + str(tweet.content) + "," + str(tweet.replyCount) + "," + str(tweet.retweetCount) + "," + str(tweet.likeCount) + "," + str(tweet.date) + ")"
-            print(sqlite_insert_query)
+            # print(sqlite_insert_query)
             sqliteConnection.execute("""INSERT INTO posts (tweet_id, user_name, content, reply_count, retweet_count, likes, created_date) 
                     VALUES (?,?,?,?,?,?,?);""", (tweet.id, tweet.user.username, tweet.content, tweet.replyCount, tweet.retweetCount, tweet.likeCount, tweet.date))
             print("Record inserted successfully into SqliteDb_developers table ")
@@ -50,11 +50,10 @@ def research():
         # twitterScraper.TwitterSearchScraper()
         msg = search+" a determiner"
 
-    conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM posts').fetchall()
+    sqliteConnection.commit()
+    posts = cursor.execute('SELECT * FROM posts').fetchall()
     print(posts)
     cursor.close()
-    conn.close()
     return render_template('home.html', toprint=msg, posts=posts)
 
 

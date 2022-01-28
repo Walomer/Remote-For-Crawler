@@ -22,20 +22,18 @@
 </div>
     {% for post in posts %}
         <a href="#">
-            <h2>{{ post['user_name'] }}</h2>
+            <h2>{{ post[7] }}</h2>
         </a>
-        <p>{{ post['content'] }}</p>
+        <p>{{ post[8] }}</p>
         <ul>
-            <li>{{ post['created_date'] }}</li>
-            <li>{{ post['tweet_id'] }}</li>
-            <li>{{ post['reply_count'] }}</li>
-            <li>{{ post['retweet_count'] }}</li>
-            <li>{{ post['lang'] }}</li>
-            <li>{{ post['user_name'] }}</li>
-            <li>{{ post['id'] }}</li>
+            <li> Date de création du tweet : {{ post[1] }}</li>
+            <li> Tweet ID : {{ post[3] }}</li>
+            <li> Likes : {{ post[9] }}</li>
+            <li> Nombre de réponse : {{ post[4] }}</li>
+            <li> Nombre de retweet : {{ post[5] }}</li>
+            <li> Langue : {{ post[6] }}</li>
+            <li> ID : {{ post[0] }}</li>
         </ul>
-        <span class="badge badge-primary">{{ post['created_date'] }}</span>
-
         <hr>
     {% endfor %}
 {% endblock %}
