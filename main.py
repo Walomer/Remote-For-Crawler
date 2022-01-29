@@ -6,21 +6,17 @@ import snscrape.modules.twitter as twitterScraper
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def home():
-    # conn = get_db_connection()
-    # posts = conn.execute('SELECT * FROM posts').fetchall()
-    # conn.close()
-    return render_template('home.html')  # , posts=posts)
-
+    #connection à la base de donnée
+    sqliteConnection  = sqlite3.connect('database/database.db')
+    cursor = sqliteConnection.cursor()
+    posts = cursor.execute('SELECT * FROM posts').fetchall()
+    cursor.close()
+    return render_template('home.html', posts=posts)
 
 @app.route('/research', methods=['POST'])
 def research():
-    #! afficher les tweet dans article selon bdd
-    #! regarder si possibilite de stop, reprendre, 10 avant, 10 apres (la télécommande)
-    # ? Meiller facon pour refresh c'est de call AJAX. fonction avec timer sur notre JSON et on recup le res de al taille
-
     print(request.form.to_dict(flat=False))
 
     #connection à la base de donnée
@@ -43,48 +39,25 @@ def research():
     else:
         scraper = twitterScraper.TwitterSearchScraper(search)
 
-    # Des qu'on arrive à la qte demandé, on s'arrete
+    #On vérifie que la quantité choisie n'est pas 0 pour pouvoir choisir le nombre de tweet que l'on veut
     if qte != 0:
         for i, tweet in enumerate(scraper.get_items()):
-            tweets.append({"id": tweet.id, "user": tweet.user.username, "content": tweet.content,
-                          "reply": tweet.replyCount, "retweet": tweet.retweetCount,
-            if i > qte:
+            # On regarde le nombre demander dans le formulaire et une fois qu'on arrive à cette quantité on sort de la boucle
+            if i > int(qte):
                 break
-            tweets.append({"id": tweet.id, "user": tweet.user.username, "content": tweet.content,
-                           "reply": tweet.replyCount, "retweet": tweet.retweetCount,
-                           "likes": tweet.likeCount, "langue": tweet.lang, "date": tweet.date})
-        ####  Ajout dans la base de donnée de chaques réponses ###
-            #Préparation de la requête
-            sqlite_insert_query = "INSERT INTO posts (tweet_id, user_name, content, reply_count, retweet_count, likes, created) VALUES (" + str(tweet.id) + "," + str(tweet.user.username) + "," + str(tweet.content) + "," + str(tweet.replyCount) + "," + str(tweet.retweetCount) + "," + str(tweet.likeCount) + "," + str(tweet.date) + ")"
-            # print(sqlite_insert_query)
-            sqliteConnection.execute("""INSERT INTO posts (tweet_id, user_name, content, reply_count, retweet_count, likes, created_date) 
-                    VALUES (?,?,?,?,?,?,?);""", (tweet.id, tweet.user.username, tweet.content, tweet.replyCount, tweet.retweetCount, tweet.likeCount, tweet.date))
-            print("Record inserted successfully into SqliteDb_developers table ")
+            ajoutBDD(tweet,search)
 
-        msg = search+" by users"
-    elif typeSearch == "typeHashtag":
-        # twitterScraper.TwitterHashtagScraper()
-        msg = search+" by #"
     # Pas de qte donne, on prends donc tout les tweet correspodant
     else:
+        # On parcours la liste des résultat du scrap pour les ajouter dans un dictionnaire afin de pouvoir traiter les données plus facilement
         for i, tweet in enumerate(scraper.get_items()):
-            tweets.append({"id": tweet.id, "user": tweet.user.username, "content": tweet.content,
-                           "reply": tweet.replyCount, "retweet": tweet.retweetCount,
-                           "likes": tweet.likeCount, "langue": tweet.lang, "date": tweet.date})
+            ajoutBDD(tweet,search)
 
-    # * Ici on ajoute dans la BD
-    #! Formatter la date en yyyy-mm-jj => split " " ; [0]
-
-    # print(tweets)
-    return render_template('home.html', ans=tweets)
-        # twitterScraper.TwitterSearchScraper()
-        msg = search+" a determiner"
-
-    sqliteConnection.commit()
+    # On récupère toute les donnée de la base de donnée afin de les afficher sur le résultat
     posts = cursor.execute('SELECT * FROM posts').fetchall()
-    print(posts)
+    # On ferme la lecture/écriture à la base de donnée
     cursor.close()
-    return render_template('home.html', toprint=msg, posts=posts)
+    return render_template('home.html', posts=posts)
 
 
 def get_db_connection():
@@ -92,6 +65,32 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+# Ajoutes les données dans la base de donnée
+def ajoutBDD(tweet, search):
+    sqliteConnection  = sqlite3.connect('database/database.db')
+    cursor = sqliteConnection.cursor()
+    print("lien twiter : " + str(tweet))
+    # Recherche des tweet_id afin d'éviter les doublons
+    tweets_id = cursor.execute('SELECT tweet_id FROM posts').fetchall()
+    # Vérification qu'il existe déjà une valeur dans la base de donnée sinon on ne pourra pas parcourir les tweet pour vérifier
+    if(tweets_id):
+        for tweet_id in tweets_id[0]:
+            # Vérification pour ne pas ajouter les doublons et ne pas avoir de problème avec la base de donnée
+            if tweet_id != tweet.id:
+                ####  Ajout dans la base de donnée de chaques réponses ###
+                # Préparation de la requête
+                sqliteConnection.execute("""INSERT INTO posts (tweet_id, user_name, content, reply_count, retweet_count, likes, created_date, search, linkToTweet) 
+                                       VALUES (?,?,?,?,?,?,?,?,?);""", (
+                    tweet.id, tweet.user.username, tweet.content, tweet.replyCount, tweet.retweetCount, tweet.likeCount,
+                    tweet.date, search, str(tweet)))
+                print("Record inserted successfully into SqliteDb_developers table ")
+    # Si il n'y a rien le premier tweet sera l'initialisation de notre base de donnée
+    else:
+        sqliteConnection.execute("""INSERT INTO posts (tweet_id, user_name, content, reply_count, retweet_count, likes, created_date, search, linkToTweet) 
+                               VALUES (?,?,?,?,?,?,?,?,?);""", (
+            tweet.id, tweet.user.username, tweet.content, tweet.replyCount, tweet.retweetCount, tweet.likeCount,
+            tweet.date, search, str(tweet)))
+    sqliteConnection.commit()
 
 if __name__ == "__main__":
     app.run(debug=True, port=3000)

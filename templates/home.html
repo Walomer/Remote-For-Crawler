@@ -54,47 +54,31 @@
       <strong>Heads up!</strong> This <a href="#" class="alert-link">alert needs your attention</a>, but it's not super important.
     </div> #}
 
-    {% for tweet in ans %}
+     {% for post in posts %}
 
       <div class="card border-info mb-3" style="max-width: 20rem;">
-        <div class="card-header">Tweet n° {{tweet.id}}</div>
+        <a href="{{post[11]}}">
+          <div class="card-header">Tweet n° {{ post[3] }}</div>
+        </a>
         <div class="card-body">
-          <h4 class="card-title">{{tweet.user}}</h4>
-          <p class="card-text">{{tweet.content}}</p>
+          <h4 class="card-title">{{ post[7] }}</h4>
+          <p class="card-text">{{ post[8] }}</p>
         </div>
         <div class="row">
           <div class="col text-center">
             <ion-icon name="chatbubbles-outline"></ion-icon>
-            <span>{{ tweet.reply }}</span>
+            <span>{{ post[4] }}</span>
           </div>
           <div class="col text-center">
             <ion-icon name="refresh-outline"></ion-icon>
-            <span>{{ tweet.retweet }}</span>
+            <span>{{ post[5] }}</span>
           </div>
           <div class="col text-center">
             <ion-icon name="heart-outline"></ion-icon>
-            <span>{{ tweet.likes }}</span>
+            <span>{{ post[9] }}</span>
           </div>
         </div>
       </div>
-
     {% endfor %}
   </div>
-  
-    {# {% for post in posts %}
-        <a href="#">
-            <h2>{{ post[7] }}</h2>
-        </a>
-        <p>{{ post[8] }}</p>
-        <ul>
-            <li> Date de création du tweet : {{ post[1] }}</li>
-            <li> Tweet ID : {{ post[3] }}</li>
-            <li> Likes : {{ post[9] }}</li>
-            <li> Nombre de réponse : {{ post[4] }}</li>
-            <li> Nombre de retweet : {{ post[5] }}</li>
-            <li> Langue : {{ post[6] }}</li>
-            <li> ID : {{ post[0] }}</li>
-        </ul>
-        <hr>
-    {% endfor %} #}
 {% endblock %}
