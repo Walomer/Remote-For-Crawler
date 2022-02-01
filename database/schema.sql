@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS requetes;
 
 CREATE TABLE posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,7 +14,7 @@ CREATE TABLE posts (
     likes INTEGER,
     search TEXT NOT NULL,
     linkToTweet TEXT NOT NULL,
-    id_requete INTEGER NOT NULL
+    id_requete INTEGER
 );
 
 CREATE TABLE requetes (
