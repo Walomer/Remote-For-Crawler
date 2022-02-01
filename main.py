@@ -15,17 +15,17 @@ def home():
     posts = cursor.execute('SELECT * FROM posts').fetchall()
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     requete = cursor.execute('SELECT * FROM requetes').fetchall()
-    print(requete)
     if (not requete):
-        requete = [0]
-    print(requete)
+        id_rq = 0
+    else:
+        # On prend la dernier element ([-1]), son id [0], et on ajoute 1
+        requete[-1][0] + 1
     cursor.close()
-    return render_template('home.html', posts=posts, id_requete=requete[0] + 1)
+    return render_template('home.html', posts=posts, id_requete=id_rq)
 
 
 @app.route('/research', methods=['POST'])
 def research():
-    print(request.form.to_dict(flat=False))
     # ! regarder si possibilite de stop, reprendre, 10 avant, 10 apres (la télécommande)
     # ! Gestion des bouttons de la telecommande ici !! Selon des fonctions definies et des variables globales
     # Voir les parametres du form
@@ -35,16 +35,15 @@ def research():
     sqliteConnection = sqlite3.connect('database/database.db')
     cursor = sqliteConnection.cursor()
 
-
     # On récupère le numéro de la requete
     id_requete = request.form.get("id_requete")
-    id_requete =5
-
     # On recupere les parametre important: recherche / type / qte
     typeSearch = list(request.form.to_dict(flat=False).keys())[1]
     search = request.form.get('search')
     typeSearch = request.form.get('typeRecherche')
     qte = request.form.get('qte_tweet')
+
+    print(id_requete)
 
     # Si on arrive ici, c'est un nouvelle recherche, dont on réinitialise notre liste
     tweets = []
@@ -78,7 +77,6 @@ def research():
     # On récupère toute les donnée de la base de donnée afin de les afficher sur le résultat
     posts = cursor.execute('SELECT * FROM posts').fetchall()
 
-
     # Ajout de la nouvelle requete à la base de donnée
     sqliteConnection.execute("""INSERT INTO requetes (id, nom_recherche, type, date, quantite)
                             VALUES (?,?,?,?,?);""", (
@@ -92,7 +90,7 @@ def research():
 
     # On ferme la lecture/écriture à la base de donnée
     cursor.close()
-    return render_template('home.html', posts=posts)
+    return render_template('home.html', posts=posts, id_requete=int(id_requete)+1)
 
 
 def get_db_connection():

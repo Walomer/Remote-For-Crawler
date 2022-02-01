@@ -7,8 +7,19 @@
                 <div class="form-group">
 
                     <label id="recherche" class="form-label">Entrez votre recherche*</label>
-                    <input type="text" for="recherche" class="form-control" name="search" required
-                           placeholder="Entrez votre recherche ici"/>
+                    {# <input type="text" for="recherche" class="form-control" name="search" required
+                           placeholder="Entrez votre recherche ici"/> #}
+                    
+                    <div class="input-group mb-3">
+                        {# <input type="text" for="recherche" class="form-control" name="search" required
+                           placeholder="Entrez votre recherche ici"/> #}
+                        <input type="text" for="recherche" class="form-control" name="search" placeholder="Entrez votre recherche ici" required>
+                        <span class="input-group-text">
+                            {{ id_requete }}
+                            <input type="hidden" name="id_requete" value="{{ id_requete }}">
+                        </span>
+                    </div>       
+                    
 
                     <label id="count" class="form-label mt-1">Indiquez la taille de l'échantillon*</label>
                     <input type="number" for="count" class="form-control" name="qte_tweet" value="0" required
@@ -55,7 +66,8 @@
 </div>
 
 {# ---------- SLIDER AFFICHAGE TWEET ---------- #}
-{% if posts %}
+
+{% if posts|length > 5%}
 <div class="containerCarousel">
     <div class="carousel">
         <div class="slider row">
