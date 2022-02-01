@@ -56,48 +56,48 @@
     </div> #}
   </div>
     {# ---------- SLIDER AFFICHAGE TWEET ---------- #}
-
-    <div class="containerCarousel">
-      <div class="carousel">
-        <div class="slider row">
-          {#! Mettre un div avec un padding left ? #}
-            {% for i in range(0,6) %}
-              <div class="col p-0 tweet">
-                <div class="card border-info d-block m-auto" style="width: 28rem;">
-                  <div class="card-header">Tweet n° {{posts[i][0]}}</div>
-                  <div class="card-body">
-                    <h4 class="card-title">{{posts[i][7]}}</h4>
-                    <p class="card-text">{{posts[i][8]}}</p>
+    {% if posts %}
+      <div class="containerCarousel">
+          <div class="carousel">
+            <div class="slider row">
+              {#! Mettre un div avec un padding left ? #}
+                {% for i in range(0,6) %}
+                  <div class="col p-0 tweet">
+                    <div class="card border-info d-block m-auto" style="width: 28rem;">
+                      <div class="card-header">Tweet n° {{posts[i][0]}}</div>
+                      <div class="card-body">
+                        <h4 class="card-title">{{posts[i][7]}}</h4>
+                        <p class="card-text">{{posts[i][8]}}</p>
+                      </div>
+                      <div class="row">
+                        <div class="col text-center">
+                          <ion-icon name="chatbubbles-outline"></ion-icon>
+                          <span>{{ posts[i][4] }}</span>
+                        </div>
+                        <div class="col text-center">
+                          <ion-icon name="refresh-outline"></ion-icon>
+                          <span>{{ posts[i][5] }}</span>
+                        </div>
+                        <div class="col text-center">
+                          <ion-icon name="heart-outline"></ion-icon>
+                          <span>{{ posts[i][9] }}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="row">
-                    <div class="col text-center">
-                      <ion-icon name="chatbubbles-outline"></ion-icon>
-                      <span>{{ posts[i][4] }}</span>
-                    </div>
-                    <div class="col text-center">
-                      <ion-icon name="refresh-outline"></ion-icon>
-                      <span>{{ posts[i][5] }}</span>
-                    </div>
-                    <div class="col text-center">
-                      <ion-icon name="heart-outline"></ion-icon>
-                      <span>{{ posts[i][9] }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="controls">
+              <span class="arrow left">
+                <ion-icon class="" name="chevron-back-outline"></ion-icon>
+              </span>
+              <span class="arrow right">
+                <ion-icon class="" name="chevron-forward-outline"></ion-icon>
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="controls">
-          <span class="arrow left">
-            <ion-icon class="" name="chevron-back-outline"></ion-icon>
-          </span>
-          <span class="arrow right">
-            <ion-icon class="" name="chevron-forward-outline"></ion-icon>
-          </span>
-        </div>
-      </div>
-    </div>
-
+      {% endif %}
     {# ---------- FIN DU SLIDER ---------- #}
 
     {# <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
