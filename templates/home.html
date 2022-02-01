@@ -41,11 +41,12 @@
       <small class="form-text text-muted text-center">Les champs avec un '*' sont obligatoires</small>
     </div>
     <div class="col telecommande text-center ">
-      <ion-icon class="picto mx-2" name="chevron-back-outline"></ion-icon>
+      <ion-icon class="picto mx-2" name="caret-back-outline"></ion-icon>
+      
         <ion-icon class="picto mx-2 btn-outline-primary" name="pause-outline"></ion-icon>
         <ion-icon class="picto mx-2 btn-outline-success" name="play-outline"></ion-icon>
         <ion-icon class="picto mx-2 btn-outline-warning" name="stop-outline"></ion-icon>
-        <ion-icon class="picto mx-2" name="chevron-forward-outline"></ion-icon>
+        <ion-icon class="picto px-2" name="caret-forward-outline"></ion-icon>
         <ion-icon class="picto mx-2" name="download-outline"></ion-icon>
         <p>Vous avez actuellement x elements</p>
     </div>
@@ -53,8 +54,119 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       <strong>Heads up!</strong> This <a href="#" class="alert-link">alert needs your attention</a>, but it's not super important.
     </div> #}
+  </div>
+    {# ---------- SLIDER AFFICHAGE TWEET ---------- #}
 
-    {% for tweet in ans %}
+    <div class="containerCarousel">
+      <div class="carousel">
+        <div class="slider row">
+          {#! Mettre un div avec un padding left ? #}
+            {% for i in range(0,6) %}
+              <div class="col p-0 tweet">
+                <div class="card border-info d-block m-auto" style="width: 28rem;">
+                  <div class="card-header">Tweet n° {{posts[i][0]}}</div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{posts[i][7]}}</h4>
+                    <p class="card-text">{{posts[i][8]}}</p>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <ion-icon name="chatbubbles-outline"></ion-icon>
+                      <span>{{ posts[i][4] }}</span>
+                    </div>
+                    <div class="col text-center">
+                      <ion-icon name="refresh-outline"></ion-icon>
+                      <span>{{ posts[i][5] }}</span>
+                    </div>
+                    <div class="col text-center">
+                      <ion-icon name="heart-outline"></ion-icon>
+                      <span>{{ posts[i][9] }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+        <div class="controls">
+          <span class="arrow left">
+            <ion-icon class="" name="chevron-back-outline"></ion-icon>
+          </span>
+          <span class="arrow right">
+            <ion-icon class="" name="chevron-forward-outline"></ion-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {# ---------- FIN DU SLIDER ---------- #}
+
+    {# <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="row">
+            {% for i in range(0,3) %}
+              <div class="col">
+                <div class="card border-info mb-3 tweet  m-auto" style="max-width: 20rem;">
+                  <div class="card-header">Tweet n° {{posts[i][0]}}</div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{posts[i][7]}}</h4>
+                    <p class="card-text">{{posts[i][8]}}</p>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <ion-icon name="chatbubbles-outline"></ion-icon>
+                      <span>{{ posts[i][4] }}</span>
+                    </div>
+                    <div class="col text-center">
+                      <ion-icon name="refresh-outline"></ion-icon>
+                      <span>{{ posts[i][5] }}</span>
+                    </div>
+                    <div class="col text-center">
+                      <ion-icon name="heart-outline"></ion-icon>
+                      <span>{{ posts[i][9] }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="row">
+            {% for i in range(0,3) %}
+              <div class="col">
+                <div class="card border-info mb-3 tweet  m-auto" style="max-width: 20rem;">
+                  <div class="card-header">Tweet n° {{posts[i][0]}}</div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{posts[i][7]}}</h4>
+                    <p class="card-text">{{posts[i][8]}}</p>
+                  </div>
+                  <div class="row">
+                    <div class="col text-center">
+                      <ion-icon name="chatbubbles-outline"></ion-icon>
+                      <span>{{ posts[i][4] }}</span>
+                    </div>
+                    <div class="col text-center">
+                      <ion-icon name="refresh-outline"></ion-icon>
+                      <span>{{ posts[i][5] }}</span>
+                    </div>
+                    <div class="col text-center">
+                      <ion-icon name="heart-outline"></ion-icon>
+                      <span>{{ posts[i][9] }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="..." class="d-block w-100" alt="...">
+        </div>
+      </div>
+    </div> #}
+
+    {# {% for tweet in ans %}
 
       <div class="card border-info mb-3" style="max-width: 20rem;">
         <div class="card-header">Tweet n° {{tweet.id}}</div>
@@ -78,10 +190,9 @@
         </div>
       </div>
 
-    {% endfor %}
-  </div>
-  
-    {# {% for post in posts %}
+    {% endfor %} #}
+
+    {% for post in posts %}
         <a href="#">
             <h2>{{ post[7] }}</h2>
         </a>
@@ -96,5 +207,5 @@
             <li> ID : {{ post[0] }}</li>
         </ul>
         <hr>
-    {% endfor %} #}
+    {% endfor %}
 {% endblock %}

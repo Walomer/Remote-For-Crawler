@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Mochiy+Pop+P+One&display=swap');
 
+/* Mise en page home.html */
+
 .body{
     background-color: inherit;
     background-image: inherit;
@@ -43,3 +45,52 @@ ion-icon{
     pointer-events: none;
 }
 
+.tweet{
+    display: flex;
+    align-content: center;
+    border-right: 1px dashed #333; 
+}
+
+/* Slider home.html */
+
+.containerCarousel {
+    width: 100%;
+}
+
+.carousel {
+    background-color: #333438;
+    height: 400px;
+    overflow: hidden;
+}
+
+.slider {
+    height: 100%;
+    display: flex;
+    /* Taille du slider */
+    width: 300%;
+    transition: all 0.3s;
+}
+
+.slider section {
+    flex-basis: 100%;
+    display: flex;
+}
+
+.controls .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.arrow.left {
+    left: 10px;
+}
+
+.arrow.right {
+    right: 10px;
+}
+
+.controls .arrow ion-icon{
+    font-size: 50px;
+}
