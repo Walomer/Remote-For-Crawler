@@ -12,5 +12,14 @@ CREATE TABLE posts (
     content TEXT NOT NULL,
     likes INTEGER,
     search TEXT NOT NULL,
-    linkToTweet TEXT NOT NULL
+    linkToTweet TEXT NOT NULL,
+    id_requete INTEGER NOT NULL
+);
+
+CREATE TABLE requetes (
+    id INTEGER PRIMARY KEY,
+    nom_recherche TEXT NOT NULL,
+    type TEXT NOT NULL,
+    date TIMESTAMP NOT NULL,
+    quantite INTEGER NOT NULL
 );

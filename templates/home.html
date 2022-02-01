@@ -1,47 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-  <div class="row py-3">
-    <div class="col">
-        <form action="{{ url_for('research') }}" method="post">
-          <div class="form-group">
+    <div class="row py-3">
+        <div class="col">
+            <form action="{{ url_for('research') }}" method="post">
+                <div class="form-group">
 
-            <label id="recherche" class="form-label">Entrez votre recherche*</label>
-            <input type="text" for="recherche" class="form-control" name="search" required placeholder="Entrez votre recherche ici"/>
+                    <label id="recherche" class="form-label">Entrez votre recherche*</label>
+                    <input type="text" for="recherche" class="form-control" name="search" required
+                           placeholder="Entrez votre recherche ici"/>
 
-            <label id="count" class="form-label mt-1">Indiquez la taille de l'échantillon*</label>
-            <input type="number" for="count" class="form-control" name="qte_tweet" value="0" required placeholder="0" min="-1"/>
-            <small class="form-text text-muted">Si vous ne souhaitez pas avoir de limite, laissez "0"</small>
+                    <label id="count" class="form-label mt-1">Indiquez la taille de l'échantillon*</label>
+                    <input type="number" for="count" class="form-control" name="qte_tweet" value="0" required
+                           placeholder="0" min="-1"/>
+                    <small class="form-text text-muted">Si vous ne souhaitez pas avoir de limite, laissez "0"</small>
 
-          </div>
+                </div>
 
-          <div class="btn-group mt-1" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="typeRecherche" id="users" value="typeUsers">
-            <label class="btn btn-outline-light" for="users">Utilisateur</label>
+                <div class="btn-group mt-1" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="typeRecherche" id="users" value="typeUsers">
+                    <label class="btn btn-outline-light" for="users">Utilisateur</label>
 
-            <input type="radio" class="btn-check" name="typeRecherche" id="hashtag" value="typeHashtag">
-            <label class="btn btn-outline-light" for="hashtag">Hashtag</label>
+                    <input type="radio" class="btn-check" name="typeRecherche" id="hashtag" value="typeHashtag">
+                    <label class="btn btn-outline-light" for="hashtag">Hashtag</label>
 
-            <input type="radio" class="btn-check" name="typeRecherche" id="search" value="typeStandard">
-            <label class="btn btn-outline-light" for="search">Standard</label>
+                    <input type="radio" class="btn-check" name="typeRecherche" id="search" value="typeStandard">
+                    <label class="btn btn-outline-light" for="search">Standard</label>
 
-          </div>
+                </div>
         </div>
         <div class="col">
-          
-          <label id="date_start" class="form-label">Indiquez une date de début -<small class="small"> Optionnel</small></label>
-          <input type="date" for="date_start" class="form-control" name="date_start"/>
-          
-          <label id="date_start" class="form-label mt-1">Indiquez une date de fin -<small class="small"> Optionnel</small></label>
-          <input type="date" for="date_start" class="form-control" name="date_end"/>
 
-          <button type="submit" class="btn btn-light submitForm mt-3">Launch request</button>
+            <label id="date_start" class="form-label">Indiquez une date de début -<small class="small">
+                Optionnel</small></label>
+            <input type="date" for="date_start" class="form-control" name="date_start"/>
+
+            <label id="date_start" class="form-label mt-1">Indiquez une date de fin -<small class="small">
+                Optionnel</small></label>
+            <input type="date" for="date_start" class="form-control" name="date_end"/>
+
+            <button type="submit" class="btn btn-light submitForm mt-3">Launch request</button>
         </div>
-      </form>
-      <small class="form-text text-muted text-center">Les champs avec un '*' sont obligatoires</small>
+        </form>
+        <small class="form-text text-muted text-center">Les champs avec un '*' sont obligatoires</small>
     </div>
     <div class="col telecommande text-center ">
-      <ion-icon class="picto mx-2" name="caret-back-outline"></ion-icon>
+        <ion-icon class="picto mx-2" name="caret-back-outline"></ion-icon>
 
         <ion-icon class="picto mx-2 btn-outline-primary" name="pause-outline"></ion-icon>
         <ion-icon class="picto mx-2 btn-outline-success" name="play-outline"></ion-icon>
@@ -50,80 +54,78 @@
         <ion-icon class="picto mx-2" name="download-outline"></ion-icon>
         <p>Vous avez actuellement x elements</p>
     </div>
-    {# <div class="alert alert-dismissible alert-light mt-4">
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      <strong>Heads up!</strong> This <a href="#" class="alert-link">alert needs your attention</a>, but it's not super important.
-    </div> #}
-  </div>
-    {# ---------- SLIDER AFFICHAGE TWEET ---------- #}
-    {% if posts %}
-      <div class="containerCarousel">
-        <div class="carousel">
-          <div class="slider row">
+</div>
+
+{# ---------- SLIDER AFFICHAGE TWEET ---------- #}
+{% if posts %}
+<div class="containerCarousel">
+    <div class="carousel">
+        <div class="slider row">
             {% for i in range(0,6) %}
-              <div class="col p-0 tweet">
+            <div class="col p-0 tweet">
                 <div class="card border-info d-block m-auto" style="width: 28rem;">
-                  <div class="card-header">Tweet n° {{posts[i][0]}}</div>
-                  <div class="card-body">
-                    <h4 class="card-title">{{posts[i][7]}}</h4>
-                    <p class="card-text">{{posts[i][8]}}</p>
-                  </div>
-                  <div class="row">
-                    <div class="col text-center">
-                      <ion-icon name="chatbubbles-outline"></ion-icon>
-                      <span>{{ posts[i][4] }}</span>
+                    <a href="{{ posts[i][11]}}">
+                        <div class="card-header">Tweet n° {{ posts[i][3] }}</div>
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-title">{{posts[i][7]}}</h4>
+                        <p class="card-text">{{posts[i][8]}}</p>
                     </div>
-                    <div class="col text-center">
-                      <ion-icon name="refresh-outline"></ion-icon>
-                      <span>{{ posts[i][5] }}</span>
+                    <div class="row">
+                        <div class="col text-center">
+                            <ion-icon name="chatbubbles-outline"></ion-icon>
+                            <span>{{ posts[i][4] }}</span>
+                        </div>
+                        <div class="col text-center">
+                            <ion-icon name="refresh-outline"></ion-icon>
+                            <span>{{ posts[i][5] }}</span>
+                        </div>
+                        <div class="col text-center">
+                            <ion-icon name="heart-outline"></ion-icon>
+                            <span>{{ posts[i][9] }}</span>
+                        </div>
                     </div>
-                    <div class="col text-center">
-                      <ion-icon name="heart-outline"></ion-icon>
-                      <span>{{ posts[i][9] }}</span>
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
             {% endfor %}
-          </div>
-          <div class="controls">
+        </div>
+        <div class="controls">
             <span class="arrow left">
               <ion-icon class="" name="chevron-back-outline"></ion-icon>
             </span>
             <span class="arrow right">
               <ion-icon class="" name="chevron-forward-outline"></ion-icon>
             </span>
-          </div>
         </div>
-      </div>
-    {% endif %}
-    {# ---------- FIN DU SLIDER ---------- #}
+    </div>
+</div>
+{% endif %}
+{# ---------- FIN DU SLIDER ---------- #}
 
-    {# {% for tweet in ans %}
-
-      <div class="card border-info mb-3" style="max-width: 20rem;">
-        <a href="{{post[11]}}">
-          <div class="card-header">Tweet n° {{ post[3] }}</div>
-        </a>
-        <div class="card-body">
-          <h4 class="card-title">{{ post[7] }}</h4>
-          <p class="card-text">{{ post[8] }}</p>
-        </div>
-        <div class="row">
-          <div class="col text-center">
+{% for post in posts %}
+<div class="card border-info mb-3" style="max-width: 20rem;">
+    <a href="{{post[11]}}">
+        <div class="card-header">Tweet n° {{ post[3] }}</div>
+    </a>
+    <div class="card-body">
+        <h4 class="card-title">{{ post[7] }}</h4>
+        <p class="card-text">{{ post[8] }}</p>
+    </div>
+    <div class="row">
+        <div class="col text-center">
             <ion-icon name="chatbubbles-outline"></ion-icon>
             <span>{{ post[4] }}</span>
-          </div>
-          <div class="col text-center">
+        </div>
+        <div class="col text-center">
             <ion-icon name="refresh-outline"></ion-icon>
             <span>{{ post[5] }}</span>
-          </div>
-          <div class="col text-center">
+        </div>
+        <div class="col text-center">
             <ion-icon name="heart-outline"></ion-icon>
             <span>{{ post[9] }}</span>
-          </div>
         </div>
-      </div>
-    {% endfor %}
-  </div> #}
-{% endblock %} 
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}
