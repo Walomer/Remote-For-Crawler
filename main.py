@@ -5,6 +5,8 @@ import sys
 import snscrape.modules.twitter as twitterScraper
 
 app = Flask(__name__)
+tweets = []
+
 
 @app.route('/')
 def home():
@@ -18,11 +20,18 @@ def home():
 @app.route('/research', methods=['POST'])
 def research():
     print(request.form.to_dict(flat=False))
+    #! afficher les tweet dans article selon bdd
+    #! SLIDER -> PARTIE AFFICHAGE
+    #! regarder si possibilite de stop, reprendre, 10 avant, 10 apres (la télécommande)
+    #! Gestion des bouttons de la telecommande ici !! Selon des fonctions definies et des variables globales
+    # Voir les parametres du form
+    # print(request.form.to_dict(flat=False))
 
-    #connection à la base de donnée
-    sqliteConnection  = sqlite3.connect('database/database.db')
+    # connection à la base de donnée
+    sqliteConnection = sqlite3.connect('database/database.db')
     cursor = sqliteConnection.cursor()
 
+    # On recupere les parametre important: recherche / type / qte
     typeSearch = list(request.form.to_dict(flat=False).keys())[1]
     search = request.form.get('search')
     typeSearch = request.form.get('typeRecherche')
@@ -31,7 +40,7 @@ def research():
     # Si on arrive ici, c'est un nouvelle recherche, dont on réinitialise notre liste
     tweets = []
 
-    # On filtre selon le form
+    # On filtre selon le type de recherche
     if typeSearch == "typeUsers":
         scraper = twitterScraper.TwitterUserScraper(search, False)
     elif typeSearch == "typeHashtag":
@@ -47,6 +56,10 @@ def research():
                 break
             ajoutBDD(tweet,search)
 
+        msg = search+" by users"
+    elif typeSearch == "typeHashtag":
+        # twitterScraper.TwitterHashtagScraper()
+        msg = search+" by #"
     # Pas de qte donne, on prends donc tout les tweet correspodant
     else:
         # On parcours la liste des résultat du scrap pour les ajouter dans un dictionnaire afin de pouvoir traiter les données plus facilement
