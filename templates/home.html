@@ -6,13 +6,8 @@
             <form action="{{ url_for('research') }}" method="post">
                 <div class="form-group">
 
-                    <label id="recherche" class="form-label">Entrez votre recherche*</label>
-                    {# <input type="text" for="recherche" class="form-control" name="search" required
-                           placeholder="Entrez votre recherche ici"/> #}
-                    
+                    <label id="recherche" class="form-label">Entrez votre recherche*</label>                    
                     <div class="input-group mb-3">
-                        {# <input type="text" for="recherche" class="form-control" name="search" required
-                           placeholder="Entrez votre recherche ici"/> #}
                         <input type="text" for="recherche" class="form-control" name="search" placeholder="Entrez votre recherche ici" required>
                         <span class="input-group-text">
                             {{ id_requete }}
@@ -27,14 +22,14 @@
                     <small class="form-text text-muted">Si vous ne souhaitez pas avoir de limite, laissez "0"</small>
 
                 </div>
-                <div class="btn-group mt-1" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="typeRecherche" id="users" value="typeUsers">
+                <div class="btn-group mt-1" aria-label="Basic radio toggle button group" aria-required="true">
+                    <input type="radio" class="btn-check" name="typeRecherche" id="users" value="typeUsers" required>
                     <label class="btn btn-outline-light" for="users">Utilisateur</label>
 
-                    <input type="radio" class="btn-check" name="typeRecherche" id="hashtag" value="typeHashtag">
+                    <input type="radio" class="btn-check" name="typeRecherche" id="hashtag" value="typeHashtag" required>
                     <label class="btn btn-outline-light" for="hashtag">Hashtag</label>
 
-                    <input type="radio" class="btn-check" name="typeRecherche" id="search" value="typeStandard">
+                    <input type="radio" class="btn-check" name="typeRecherche" id="search" value="typeStandard" required>
                     <label class="btn btn-outline-light" for="search">Standard</label>
                 </div>
         </div>

@@ -15,11 +15,13 @@ def home():
     posts = cursor.execute('SELECT * FROM posts').fetchall()
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     requete = cursor.execute('SELECT * FROM requetes').fetchall()
+    # Verification du numero de requete
     if (not requete):
+        # Si vide, on init à 0
         id_rq = 0
     else:
         # On prend la dernier element ([-1]), son id [0], et on ajoute 1
-        requete[-1][0] + 1
+        id_rq = requete[-1][0] + 1
     cursor.close()
     return render_template('home.html', posts=posts, id_requete=id_rq)
 
@@ -28,12 +30,12 @@ def home():
 def research():
     # ! regarder si possibilite de stop, reprendre, 10 avant, 10 apres (la télécommande)
     # ! Gestion des bouttons de la telecommande ici !! Selon des fonctions definies et des variables globales
-    # Voir les parametres du form
-    # print(request.form.to_dict(flat=False))
-
-    # connection à la base de donnée
+    # Connection à la base de donnée
     sqliteConnection = sqlite3.connect('database/database.db')
     cursor = sqliteConnection.cursor()
+
+    # Voir les parametres du form
+    # print(request.form.to_dict(flat=False))
 
     # On récupère le numéro de la requete
     id_requete = request.form.get("id_requete")
@@ -42,11 +44,6 @@ def research():
     search = request.form.get('search')
     typeSearch = request.form.get('typeRecherche')
     qte = request.form.get('qte_tweet')
-
-    print(id_requete)
-
-    # Si on arrive ici, c'est un nouvelle recherche, dont on réinitialise notre liste
-    tweets = []
 
     # On filtre selon le type de recherche
     if typeSearch == "typeUsers":
@@ -63,11 +60,6 @@ def research():
             if i > int(qte):
                 break
             ajoutBDD(tweet, search, id_requete)
-
-        msg = search + " by users"
-    elif typeSearch == "typeHashtag":
-        # twitterScraper.TwitterHashtagScraper()
-        msg = search + " by #"
     # Pas de qte donne, on prends donc tout les tweet correspodant
     else:
         # On parcours la liste des résultat du scrap pour les ajouter dans un dictionnaire afin de pouvoir traiter les données plus facilement
@@ -81,15 +73,14 @@ def research():
     sqliteConnection.execute("""INSERT INTO requetes (id, nom_recherche, type, date, quantite)
                             VALUES (?,?,?,?,?);""", (
         id_requete, search, typeSearch, datetime.datetime.now().date(), qte))
-    # print(id_requete)
 
     # On récupère toute les donnée de la base de donnée afin de les afficher sur le résultat
     requete = cursor.execute('SELECT * FROM requetes').fetchall()
-    print(requete)
     sqliteConnection.commit()
 
     # On ferme la lecture/écriture à la base de donnée
     cursor.close()
+    # On revoit sur la page home avec un id+1 pour eviter les doublons / erreurs
     return render_template('home.html', posts=posts, id_requete=int(id_requete)+1)
 
 
@@ -128,7 +119,6 @@ def ajoutBDD(tweet, search, id_requete):
 
 # Regarde si le tweet est déjà dans la base de donné
 def checkIfTweetExist(tweetidToAdd):
-    print("Je suis checkIfTweetExist")
     exist = True
     sqliteConnection = sqlite3.connect('database/database.db')
     cursor = sqliteConnection.cursor()
