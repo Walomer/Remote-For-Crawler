@@ -3,6 +3,7 @@ import sqlite3
 from flask import Flask, render_template, request
 import snscrape.modules.twitter as twitterScraper
 
+pause = False
 app = Flask(__name__)
 tweets = []
 
@@ -28,6 +29,7 @@ def home():
 
 @app.route('/research', methods=['POST'])
 def research():
+
     # ! regarder si possibilite de stop, reprendre, 10 avant, 10 apres (la télécommande)
     # ! Gestion des bouttons de la telecommande ici !! Selon des fonctions definies et des variables globales
     # Connection à la base de donnée
@@ -131,6 +133,16 @@ def checkIfTweetExist(tweetidToAdd):
             break
     print(exist)
     return exist
+
+@app.route('/changePauseSetting')
+def changePauseSetting():
+    global pause
+    if(pause):
+        pause =False
+    else:
+        pause = True
+    print(pause)
+    return render_template('home.html')
 
 
 if __name__ == "__main__":

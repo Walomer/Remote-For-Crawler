@@ -51,8 +51,8 @@
     <div class="col telecommande text-center ">
         <ion-icon class="picto mx-2" name="caret-back-outline"></ion-icon>
 
-        <ion-icon class="picto mx-2 btn-outline-primary" name="pause-outline"></ion-icon>
-        <ion-icon class="picto mx-2 btn-outline-success" name="play-outline"></ion-icon>
+        <a class="action" href="{{url_for('changePauseSetting') }}"><ion-icon class="picto mx-2 btn-outline-primary" name="pause-outline"></ion-icon></a>
+        <a class="action" href="{{url_for('changePauseSetting') }}"> <ion-icon class="picto mx-2 btn-outline-success" name="play-outline"></ion-icon></a>
         <ion-icon class="picto mx-2 btn-outline-warning" name="stop-outline"></ion-icon>
         <ion-icon class="picto px-2" name="caret-forward-outline"></ion-icon>
         <ion-icon class="picto mx-2" name="download-outline"></ion-icon>
